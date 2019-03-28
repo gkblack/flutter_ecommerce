@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_ecommerce/config/service_method.dart';
 import 'package:flutter_ecommerce/widget/swiper_diy.dart';
 import 'package:flutter_ecommerce/widget/ad_banner.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +19,112 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   // AutomaticKeepAliveClientMixin 页面状态保持，避免每次切换页面都要重新加载,只适用于StatefulWidget
+  int page = 1;
+  List<Map> hotGoodsList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
+  // 火爆商品接口
+  void _getHotGoods() {
+    var formPage = {'page': page};
+    request('homePageBelowConten', formData: formPage).then((val) {
+      var data = json.decode(val.toString());
+      List<Map> newGoodsList = (data['data'] as List).cast();
+      setState(() {
+        hotGoodsList.addAll(newGoodsList);
+        page++;
+      });
+    });
+  }
+
+  GlobalKey<RefreshHeaderState> _headerKeyGrid =
+      new GlobalKey<RefreshHeaderState>();
+  GlobalKey<RefreshFooterState> _footerKeyGrid =
+      new GlobalKey<RefreshFooterState>();
+
+  // 火爆专区子项
+  Widget _wrapList() {
+    if (hotGoodsList.length != 0) {
+      List<Widget> listWidget = hotGoodsList.map((val) {
+        return InkWell(
+          onTap: () {
+            print('click 火爆专区商品');
+          },
+          child: Container(
+            width: ScreenUtil().setWidth(372),
+            color: Colors.white,
+            padding: EdgeInsets.all(5.0),
+            margin: EdgeInsets.only(bottom: 3.0),
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  val['image'],
+                  width: ScreenUtil().setWidth(375),
+                ),
+                Text(
+                  val['name'],
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: Colors.pink, fontSize: ScreenUtil().setSp(26)),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text('￥${val['mallPrice']}'),
+                    Text(
+                      '￥${val['price']}',
+                      style: TextStyle(
+                          color: Colors.black26,
+                          decoration: TextDecoration.lineThrough),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      }).toList();
+      return Wrap(
+        // Wrap 流式布局
+        spacing: 2,
+        children: listWidget,
+      );
+    } else {
+      return Text(' ');
+    }
+  }
+
+  Widget hotTitle = Container(
+    padding: EdgeInsets.all(5.0),
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(width: 0.5, color: Colors.black12),
+        )),
+    child: Text('火爆专区'),
+  );
+
+  Widget _hotGoods() {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          hotTitle,
+          _wrapList(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
@@ -26,8 +133,7 @@ class _HomePageState extends State<HomePage>
         appBar: AppBar(
           title: Text("life"),
         ),
-        body: SingleChildScrollView(
-            child: FutureBuilder(
+        body: FutureBuilder(
                 // FutureBuilder用來解决异步渲染的问题
                 future: getHomePageData(),
                 builder: (context, snapshot) {
@@ -59,46 +165,68 @@ class _HomePageState extends State<HomePage>
                       navigatorList.removeRange(
                           10, navigatorList.length); // 截取掉后面不需要的数据
                     }
-                    return Column(
-                      children: <Widget>[
-                        SwiperDiy(swiperDataList: swiperDataList), // 轮播
-                        TopNavigator(navigatorList: navigatorList), //导航组件
-                        AdBanner(
-                          advertesPicture: advertesPicture,
-                        ),
-                        LeaderPhone(
-                          leaderImage: leaderImage,
-                          leaderPhone: leaderPhone,
-                        ),
-                        Recommend(
-                          recommendList: recommendList,
-                        ),
-                        FloorTitle(
-                          floorTitle: floor1Title,
-                        ),
-                        FloorData(
-                          floorGoodsList: floor1,
-                        ),
-                        FloorTitle(
-                          floorTitle: floor2Title,
-                        ),
-                        FloorData(
-                          floorGoodsList: floor2,
-                        ),
-                        FloorTitle(
-                          floorTitle: floor3Title,
-                        ),
-                        FloorData(
-                          floorGoodsList: floor3,
-                        ),
-                      ],
+                    return EasyRefresh(
+                      child: ListView(
+                        children: <Widget>[
+                          SwiperDiy(swiperDataList: swiperDataList), // 轮播
+                          TopNavigator(navigatorList: navigatorList), //导航组件
+                          AdBanner(
+                            advertesPicture: advertesPicture,
+                          ),
+                          LeaderPhone(
+                            leaderImage: leaderImage,
+                            leaderPhone: leaderPhone,
+                          ),
+                          Recommend(
+                            recommendList: recommendList,
+                          ),
+                          FloorTitle(
+                            floorTitle: floor1Title,
+                          ),
+                          FloorData(
+                            floorGoodsList: floor1,
+                          ),
+                          FloorTitle(
+                            floorTitle: floor2Title,
+                          ),
+                          FloorData(
+                            floorGoodsList: floor2,
+                          ),
+                          FloorTitle(
+                            floorTitle: floor3Title,
+                          ),
+                          FloorData(
+                            floorGoodsList: floor3,
+                          ),
+                          _hotGoods(),
+                        ],
+                      ),
+                      refreshFooter: ClassicsFooter(
+                        key: _footerKeyGrid,
+                        bgColor: Colors.white,
+                        textColor: Colors.pink,
+                        showMore: true,
+                        noMoreText: '',
+                        moreInfo: '加载中',
+                        loadReadyText: '上拉加载....',
+                      ),
+                      refreshHeader: ClassicsHeader(
+                        key: _headerKeyGrid,
+                        bgColor: Colors.white,
+                        textColor: Colors.pink,
+                        moreInfoColor: Colors.pink,
+                      ),
+                      onRefresh: () {},
+                      loadMore: () async {
+                        _getHotGoods();
+                      },
                     );
                   } else {
                     return Center(
                       child: Text("加载中"),
                     );
                   }
-                })));
+                }));
   }
 
   @override
@@ -320,14 +448,11 @@ class FloorData extends StatelessWidget {
   }
 }
 
-class HotGoods extends StatefulWidget{
-
+class HotGoods extends StatefulWidget {
   _HotGoodsState createState() => _HotGoodsState();
-
 }
 
-class _HotGoodsState extends State<HotGoods>{
-
+class _HotGoodsState extends State<HotGoods> {
   @override
   void initState() {
     // TODO: implement initState
@@ -341,5 +466,4 @@ class _HotGoodsState extends State<HotGoods>{
       child: Text('1111'),
     );
   }
-
 }

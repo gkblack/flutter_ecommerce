@@ -26,6 +26,8 @@ dependencies:
   flutter_screenutil: ^0.5.1
   # 轮播
   flutter_swiper: ^1.1.4
+  # 刷新
+  flutter_easyrefresh: ^1.2.7
 
   # 网络请求
   dio: ^2.0.14
