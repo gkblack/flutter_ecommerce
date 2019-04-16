@@ -28,6 +28,8 @@ dependencies:
   flutter_swiper: ^1.1.4
   # 刷新
   flutter_easyrefresh: ^1.2.7
+  # 状态管理
+  provide: ^1.0.2
 
   # 网络请求
   dio: ^2.0.14
@@ -47,6 +49,9 @@ dependencies:
 
   # 撥打電話
   url_launcher: ^5.0.2
+
+  # 路由框架
+  fluro: ^1.4.0
 
 dev_dependencies:
   flutter_test:

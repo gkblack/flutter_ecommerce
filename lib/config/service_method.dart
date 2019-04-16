@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'dart:async';
 import 'dart:io';
 import 'service_url.dart';
-import 'package:flutter_ecommerce/config/service_url.dart';
 
 // 获取服务器数据接口
 
@@ -16,7 +15,7 @@ Future getHomePageData() async {
     var formData = {'lon': 115.02932, 'lat': 35.76189};
     response = await dio.post(servicePath['homePageContext'], data: formData);
     if (response.statusCode == 200) {
-      print('getHomePageData首页数据返回成功' + response.data);
+//      print('getHomePageData首页数据返回成功' + response.data);
       return response.data;
     } else {
       throw Exception('获取接口异常');

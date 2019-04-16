@@ -1,6 +1,7 @@
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_ecommerce/routers/app.dart';
 
 // 轮播
 class SwiperDiy extends StatelessWidget {
@@ -18,8 +19,13 @@ class SwiperDiy extends StatelessWidget {
       width: ScreenUtil().setWidth(750),
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Image.network("${swiperDataList[index]['image']}",
-              fit: BoxFit.fill);
+          return InkWell(
+            onTap: (){
+              Application.router.navigateTo(context, '/detail?id=${swiperDataList[index]['goodsId']}');
+            },
+              child:Image.network("${swiperDataList[index]['image']}",
+                  fit: BoxFit.fill),
+          );
         },
         itemCount: swiperDataList.length,
         pagination: SwiperPagination(),

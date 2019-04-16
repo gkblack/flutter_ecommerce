@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
 
 class MemberPage extends StatefulWidget{
   @override
@@ -14,11 +15,15 @@ class _MemberPageState extends State<MemberPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Row(
-        children: <Widget>[
-          Text("首页")
-        ],
-      ),
+      body: Center(
+        child:  Column(
+
+          ),
+//            Text(
+//            '${counter.value}',
+//            style: Theme.of(context).textTheme.display1,
+//          );
+        ),
     );
   }
 
