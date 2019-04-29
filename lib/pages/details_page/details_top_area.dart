@@ -11,7 +11,7 @@ class DatailsTopArea extends StatelessWidget{
     return Provide<DetailsInfoProvide>(
       builder: (context, child, val){
         var goodsInfo = Provide.value<DetailsInfoProvide>(context).goodsInfo.data.goodInfo;
-
+        print('goodsInfo::'+goodsInfo.image1);
         if(goodsInfo != null){
           return Container(
             color: Colors.white,

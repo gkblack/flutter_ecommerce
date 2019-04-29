@@ -129,6 +129,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(

@@ -1,3 +1,4 @@
+// 商品详情
 class DetailsModel {
   String code;
   String message;
@@ -8,7 +9,7 @@ class DetailsModel {
   DetailsModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? new DetailsGoodsData .fromJson(json['data']) : null;
+    data = json['data'] != null ? new DetailsGoodsData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -69,7 +70,7 @@ class GoodInfo {
   String image1;
   String image2;
   String goodsSerialNumber;
-  int oriPrice;
+  double oriPrice;
   double presentPrice;
   String comPic;
   int state;

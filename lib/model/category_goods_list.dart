@@ -1,11 +1,11 @@
-class CategoryGoodsLisModel {
+class CategoryGoodsListModel {
   String code;
   String message;
   List<CategoryListData> data;
 
-  CategoryGoodsLisModel({this.code, this.message, this.data});
+  CategoryGoodsListModel({this.code, this.message, this.data});
 
-  CategoryGoodsLisModel.fromJson(Map<String, dynamic> json) {
+  CategoryGoodsListModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
     if (json['data'] != null) {

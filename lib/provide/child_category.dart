@@ -11,7 +11,7 @@ class ChildCategory with ChangeNotifier {
   String noMoreText = ''; // 显示更多的标识
   bool isNewCategoty = false;
 
-  getChildCategory(List<dynamic> list, String id) {
+  getChildCategory(List<BxMallSubDto> list, String id) {
     isNewCategoty = true;
     categoryId = id;
     childIndex = 0;
@@ -21,18 +21,13 @@ class ChildCategory with ChangeNotifier {
   //------------------关键代码end
     subId = ''; // 点击大类时把子类ID清空
     noMoreText = '';
-    // 将动态list转为BxMallSubDto类型的list
-    List<BxMallSubDto> li = [];
-    for (var i = 0; i < list.length; i++) {
-      li.add(BxMallSubDto.fromJson(list[i]));
-    }
-    BxMallSubDto all = BxMallSubDto();
+    var all = BxMallSubDto();
     all.mallSubId = '00';
     all.mallCategoryId = '00';
     all.mallSubName = '全部';
     all.comments = 'null';
     childCategoryList = [all];
-    childCategoryList.addAll(li);
+    childCategoryList.addAll(list);
     notifyListeners();
   }
 

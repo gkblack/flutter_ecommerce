@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,9 @@ class SwiperDiy extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: (){
-              Application.router.navigateTo(context, '/detail?id=${swiperDataList[index]['goodsId']}');
+              Application.router.navigateTo(context, '/detail?id=${swiperDataList[index]['goodsId']}',
+              transition: TransitionType.fadeIn   // 进入页面的动画效果
+              );
             },
               child:Image.network("${swiperDataList[index]['image']}",
                   fit: BoxFit.fill),

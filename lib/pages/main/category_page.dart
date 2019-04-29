@@ -96,7 +96,6 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         print("leftClick${list[index].mallCategoryId}");
         var childList = list[index].bxMallSubDto;
         var categoryId = list[index].mallCategoryId;
-        var mallSubId = list[index].mallSubId;
         Provide.value<ChildCategory>(context)
             .getChildCategory(childList, categoryId);
         _getGoodsList(categorySubId: categoryId);
@@ -124,18 +123,14 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   void _getCategory() async {
     await request('getCategory').then((val) {
       var data = json.decode(val.toString());
-      CategoryBigListModel category =
-          CategoryBigListModel.fromJson(data['data']);
+      CategoryModel category =
+          CategoryModel.fromJson(data);
       setState(() {
         // 通过setState改变list状态，实现动态变更数据显示
         list = category.data;
       });
       Provide.value<ChildCategory>(context)
           .getChildCategory(list[0].bxMallSubDto, list[0].mallCategoryId);
-//      Provide.value<CategoryGoodsListProvide>(context).getGoodsList(list[0].);
-//      list[0].bxMallSubDto.forEach((item) => print(item.mallSubName));
-      // 一开始时点击分类时默认显示第一个的数据
-      _getGoodsList(categorySubId: list[0].mallSubId);
     });
   }
 
@@ -147,7 +142,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     };
     await request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
-      CategoryGoodsLisModel goodsList = CategoryGoodsLisModel.fromJson(data);
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
         Provide.value<CategoryGoodsListProvide>(context).getGoodsList([]);
       } else {
@@ -200,7 +195,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       onTap: () {
         Provide.value<ChildCategory>(context)
             .changeChildIndex(index, item.mallSubId);
-        (item.mallSubId);
+        _getGoodsList(item.mallSubId);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
@@ -213,6 +208,23 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
         ),
       ),
     );
+  }
+
+  void _getGoodsList(String categorySubId) async{
+    var data = {
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId': categorySubId,
+      'page': 1
+    };
+    await request('getMallGoods', formData: data).then((val) {
+      var data = json.decode(val.toString());
+      var goodsList = CategoryGoodsListModel.fromJson(data);
+      if(goodsList.data==null){
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList([]);
+      }else{
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList(goodsList.data);
+      }
+    });
   }
 }
 
@@ -329,12 +341,12 @@ class _CategoryGoodsListState extends State<CategoryGoodslist> {
 
     request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
-      CategoryBigListModel goodsList = CategoryBigListModel.fromJson(data);
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
         Provide.value<ChildCategory>(context).changeNoMore('没有更多了');
       } else {
         Provide.value<CategoryGoodsListProvide>(context)
-            .addGoodsList(goodsList.data);
+            .getMoreList(goodsList.data);
       }
     });
   }

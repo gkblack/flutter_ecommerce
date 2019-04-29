@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/pages/index_page.dart';
-import 'package:flutter_ecommerce/provide/child_category.dart';
-import 'package:flutter_ecommerce/provide/category_goods_list.dart';
-import 'package:provide/provide.dart';
 import 'package:flutter_ecommerce/provide/counter.dart';
 import 'routers/routes.dart';
 import 'routers/app.dart';
 import 'package:fluro/fluro.dart';
+import 'provide/child_category.dart';
+import 'provide/category_goods_list.dart';
+import 'package:provide/provide.dart';
+import 'provide/cart.dart';
+import 'provide/counter.dart';
+import 'provide/details_info.dart';
 
 void main() {
   var counter = Counter();
   var providers = Providers();
   var childCategory = ChildCategory();
   var categoryGoodsListProvide = CategoryGoodsListProvide();
+  var cartProvide = CartProvide();
+  var detailsInfoProvide = DetailsInfoProvide();
   providers
     ..provide(Provider<Counter>.value(counter))
     ..provide(Provider<ChildCategory>.value(childCategory))
-    ..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
+    ..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide))
+    ..provide(Provider<CartProvide>.value(cartProvide))
+    ..provide(Provider<DetailsInfoProvide>.value(detailsInfoProvide));
   runApp(ProviderNode(child:MyApp(),providers:providers));
 }
 
