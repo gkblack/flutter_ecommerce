@@ -12,6 +12,7 @@ Future getHomePageData() async {
     Dio dio = new Dio();
     dio.options.contentType =
         ContentType.parse("application/x-www-form-urlencoded");
+    // 首页数据formDat字段
     var formData = {'lon': 115.02932, 'lat': 35.76189};
     response = await dio.post(servicePath['homePageContext'], data: formData);
     if (response.statusCode == 200) {

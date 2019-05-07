@@ -10,6 +10,7 @@ import 'package:provide/provide.dart';
 import 'provide/cart.dart';
 import 'provide/counter.dart';
 import 'provide/details_info.dart';
+import 'provide/current_index.dart';
 
 void main() {
   var counter = Counter();
@@ -18,12 +19,14 @@ void main() {
   var categoryGoodsListProvide = CategoryGoodsListProvide();
   var cartProvide = CartProvide();
   var detailsInfoProvide = DetailsInfoProvide();
+  var currentIndexProvide = CurrentIndexProvide();
   providers
     ..provide(Provider<Counter>.value(counter))
     ..provide(Provider<ChildCategory>.value(childCategory))
     ..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide))
     ..provide(Provider<CartProvide>.value(cartProvide))
-    ..provide(Provider<DetailsInfoProvide>.value(detailsInfoProvide));
+    ..provide(Provider<DetailsInfoProvide>.value(detailsInfoProvide))
+    ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide));
   runApp(ProviderNode(child:MyApp(),providers:providers));
 }
 

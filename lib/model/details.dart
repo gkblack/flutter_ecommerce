@@ -180,3 +180,5 @@ class AdvertesPicture {
     return data;
   }
 }
+
+//{"code":"0","message":"success","data":{"goodInfo":{"image5":"","amount":10000,"image3":"","image4":"","goodsId":"6fe4fe0fb5394c0d9b9b4792a827e029","isOnline":"yes","image1":"http://images.baixingliangfan.cn/shopGoodsImg/20190111/20190111145821_5493.jpg","image2":"","goodsSerialNumber":"6901434011898","oriPrice":1595.00,"presentPrice":1450.00,"comPic":"http://images.baixingliangfan.cn/compressedPic/20190111145821_5493.jpg","state":1,"shopId":"402880e860166f3c0160167897d60002","goodsName":"剑南春15年46°500ml","goodsDetail":"<img width=\"100%\" height=\"auto\" alt=\"\" src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20190109/20190109172624_1286.jpg\" /><img width=\"100%\" height=\"auto\" alt=\"\" src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20190109/20190109172624_3721.jpg\" /><img width=\"100%\" height=\"auto\" alt=\"\" src=\"http://images.baixingliangfan.cn/shopGoodsDetailImg/20190109/20190109172625_6039.jpg\" /><img width=\"100%\" height=\"auto\" alt=\

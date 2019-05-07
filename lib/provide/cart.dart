@@ -74,7 +74,6 @@ class CartProvide extends ChangeNotifier {
           allPrice = (item['count'] * item['price']);
           allGoodsCount += item['count']; // 将所有物品加入购物车的数量相加
         }
-
         cartList.add(new CartInfoModel.fromJson(item));
       });
     }
@@ -93,15 +92,16 @@ class CartProvide extends ChangeNotifier {
       if (item['goodsId'] == goodsId) {
         delIndex = tempIndex;
       }
-      tempIndex;
+      tempIndex++;
     });
     tempList.removeAt(delIndex);
     cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString);
-    // 删除后重新拉起购物车信息
+    // 删除某个商品后重新获取购物车信息
     await getCartInfo();
   }
 
+  // 商品单选
   changeCheckState(CartInfoModel cartInfo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
@@ -116,5 +116,8 @@ class CartProvide extends ChangeNotifier {
       tempIndex++;
     });
     tempList[changeIndex] = cartInfo.toJson(); //将对象转为map
+    cartString = json.encode(tempList).toString(); // 转字符串
+    prefs.setString('cartInfo', cartString);
+    await getCartInfo(); // 在点击商品后重新统计并获取数据
   }
 }
