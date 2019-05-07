@@ -4,7 +4,7 @@ import 'package:provide/provide.dart';
 import 'package:flutter_ecommerce/provide/details_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// 设置
+// 商品详情
 class DetailsWeb extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
