@@ -41,8 +41,7 @@ class IndexPage extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
             onTap: (index) {
-              Provide.value<CurrentIndexProvide>(context)
-                  .changeIndex(index);
+              Provide.value<CurrentIndexProvide>(context).changeIndex(index);
             },
           ),
           body: IndexedStack(

@@ -12,6 +12,7 @@ class DetailsWeb extends StatelessWidget{
     // TODO: implement build
     return Provide<DetailsInfoProvide>(
       builder: (context, child, val){
+        // 通过Provide控制tabbar左右切换
         var isLeft = Provide.value<DetailsInfoProvide>(context).isLeft;
         if(isLeft){
           return Container(

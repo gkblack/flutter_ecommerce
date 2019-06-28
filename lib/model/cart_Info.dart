@@ -9,7 +9,7 @@ class CartInfoModel {
   String goodsId;
   String goodsName;
   int count;
-  int price;
+  double price;
   String images;
   bool isCheck; // 是否点击
 

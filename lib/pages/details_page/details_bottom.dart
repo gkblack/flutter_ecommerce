@@ -3,11 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce/provide/current_index.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_ecommerce/provide/cart.dart';
+import 'package:flutter_ecommerce/provide/details_info.dart';
 
 // 购物车底部 ，添加或购买
 class DetailsBottom extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
+    var goodsInfo = Provide.value<DetailsInfoProvide>(context).goodsInfo.data.goodInfo;
+    var goodsId = goodsInfo.goodsId;
+    var goodsName = goodsInfo.goodsName;
+    var count = 1;
+    var goodsPrice = goodsInfo.presentPrice;
+    var goodsPic = goodsInfo.comPic;
     // TODO: implement build
     return Container(
       width: ScreenUtil().setWidth(750),
@@ -60,7 +68,7 @@ class DetailsBottom extends StatelessWidget{
               ),
               InkWell(
                 onTap: (){
-
+                  Provide.value<CartProvide>(context).save(goodsId, goodsName, count, goodsPrice, goodsPic);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -73,7 +81,6 @@ class DetailsBottom extends StatelessWidget{
               ),
               InkWell(
                 onTap: (){
-
                 },
                 child: Container(
                   alignment: Alignment.center,

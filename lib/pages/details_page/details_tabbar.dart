@@ -33,7 +33,7 @@ class DetailsTabBar extends StatelessWidget{
   Widget _myTabBarLeft(BuildContext context, bool isLeft){
     return InkWell(
       onTap: (){
-
+        Provide.value<DetailsInfoProvide>(context).changeLeftAndRight('left');
       },
       child: Container(
         padding: EdgeInsets.all(10.0),
@@ -61,7 +61,7 @@ class DetailsTabBar extends StatelessWidget{
   Widget _myTabBarRight(BuildContext context, bool isRight){
     return InkWell(
       onTap: (){
-
+        Provide.value<DetailsInfoProvide>(context).changeLeftAndRight('right');
       },
       child: Container(
         padding: EdgeInsets.all(10.0),
@@ -77,7 +77,7 @@ class DetailsTabBar extends StatelessWidget{
           ),
         ),
         child: Text(
-          '详细',
+          '参数',
           style: TextStyle(
             color: isRight? Colors.pink : Colors.black,
           ),
