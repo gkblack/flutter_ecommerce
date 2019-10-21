@@ -4,7 +4,7 @@ import 'package:provide/provide.dart';
 import 'package:flutter_ecommerce/pages/cart_page/cart_bottom.dart';
 import 'package:flutter_ecommerce/pages/cart_page/cart_item.dart';
 
-//stful 快速生成
+//stful 快速生成 购物车
 class CartPage extends StatelessWidget {
   List<String> cartList = [];
 
@@ -17,6 +17,7 @@ class CartPage extends StatelessWidget {
         body: FutureBuilder(
             future: _getCartInfo(context),
             builder: (context, snapshot) {
+              print('cartPage-load');
               List cartList = Provide.value<CartProvide>(context).cartList;
               if (snapshot.hasData && cartList != null) {
                 return Stack(

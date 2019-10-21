@@ -17,6 +17,7 @@ class CartProvide extends ChangeNotifier {
     var temp=cartString==null?[]:json.decode(cartString.toString());
     //把获得值转变成List
     List<Map> tempList= (temp as List).cast();
+    print("tempList${tempList}");
     //声明变量，用于判断购物车中是否已经存在此商品ID
     var isHave= false;  //默认为没有
     int ival=0; //用于进行循环的索引使用
@@ -28,15 +29,23 @@ class CartProvide extends ChangeNotifier {
       //如果存在，数量进行+1操作
       if(item['goodsId']==goodsId){
         tempList[ival]['count']=item['count']+1;
-        cartList[ival].count++;
+        print("${tempList[ival]['count']}");
+        try {
+          cartList[ival].count++;
+        } catch (e) {
+          print(e);
+        }
         isHave=true;
       }
       if(item['isCheck']){
-        allPrice+= (cartList[ival].price* cartList[ival].count);
-        allGoodsCount+= cartList[ival].count;
+        print('cartList${cartList}:allGoodsCount${allGoodsCount}');
+        try {
+          allPrice+= (cartList[ival].price* cartList[ival].count);
+          allGoodsCount+= cartList[ival].count;
+        } catch (e) {
+          print(e);
+        }
       }
-
-
       ival++;
     });
     //  如果没有，进行增加
@@ -53,6 +62,7 @@ class CartProvide extends ChangeNotifier {
       cartList.add(new CartInfoModel.fromJson(newGoods));
       allPrice+= (count * price);
       allGoodsCount+=count;
+      print("数量：${allGoodsCount}count:${count}");
     }
     //把字符串进行encode操作，
     cartString= json.encode(tempList).toString();
@@ -91,6 +101,7 @@ class CartProvide extends ChangeNotifier {
         cartList.add(new CartInfoModel.fromJson(item));
       });
     }
+    print("cartList:${cartList}");
     notifyListeners();
   }
 

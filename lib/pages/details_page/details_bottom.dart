@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce/provide/current_index.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_ecommerce/provide/cart.dart';
 import 'package:flutter_ecommerce/provide/details_info.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // 购物车底部 ，添加或购买
 class DetailsBottom extends StatelessWidget{
@@ -40,9 +41,11 @@ class DetailsBottom extends StatelessWidget{
                       ),
                     ) ,
                   ),
+//                  数字角标
                   Provide<CartProvide>(
                     builder: (context,child,val){
                       int  goodsCount = Provide.value<CartProvide>(context).allGoodsCount;
+                      print("数量：${goodsCount}");
                       return  Positioned(
                         top:0,
                         right: 3,
@@ -67,8 +70,9 @@ class DetailsBottom extends StatelessWidget{
                 ],
               ),
               InkWell(
-                onTap: (){
-                  Provide.value<CartProvide>(context).save(goodsId, goodsName, count, goodsPrice, goodsPic);
+                onTap: () async{
+                  Fluttertoast.showToast(msg: "添加购物车成功:${goodsId}");
+                  await Provide.value<CartProvide>(context).save(goodsId, goodsName, count, goodsPrice, goodsPic);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -80,7 +84,8 @@ class DetailsBottom extends StatelessWidget{
                 ),
               ),
               InkWell(
-                onTap: (){
+                onTap: () async{
+                  await Provide.value<CartProvide>(context).remove();
                 },
                 child: Container(
                   alignment: Alignment.center,

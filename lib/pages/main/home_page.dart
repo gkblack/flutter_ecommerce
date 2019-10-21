@@ -59,7 +59,6 @@ class _HomePageState extends State<HomePage>
         return InkWell(
           onTap: () {
             Application.router.navigateTo(context, "/detail?id=${val['goodsId']}");
-            print('click 火爆专区商品');
           },
           child: Container(
             width: ScreenUtil().setWidth(372),
@@ -128,18 +127,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    // TODO: implement build
+//    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+//    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
+      backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
         appBar: AppBar(
           centerTitle: true,
-          title: Text("life"),
+          title: Text("生活"),
         ),
         body: FutureBuilder(
             // FutureBuilder用來解决异步渲染的问题
             future: getHomePageData(),
             builder: (context, snapshot) {
+              print('home-load');
               if (snapshot.hasData) {
                 var data = json.decode(snapshot.data.toString()); // 拿到返回的json數據
                 List<Map> swiperDataList =
